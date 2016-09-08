@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getDataWilayah() {
-        Subscription subscription = museumApiService.getAreaData(new MuseumApiService.OnGetAreaDataListener() {
+        Subscription subscription = museumApiService.getProvinces(new MuseumApiService.OnGetListAreaListener() {
             @Override
             public void onSuccess(DataWilayah dataWilayah) {
                 Toast.makeText(getBaseContext(), "GET data wilayah\n" + dataWilayah.wilayahModels.get(0).nama, Toast.LENGTH_SHORT).show();
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDataMuseum() {
         String museumId = "4A33CF6F-A284-4E42-830B-E7DC755614CD";
-        Subscription subscription = museumApiService.getMuseumProfile(museumId, new MuseumApiService.OnGetMuseumProfileListener() {
+        Subscription subscription = museumApiService.getMuseumProfile(museumId, new MuseumApiService.OnGetListMuseumListener() {
             @Override
             public void onSuccess(DataMuseum dataMuseum) {
                 Toast.makeText(getBaseContext(), "GET museum profile\n" + dataMuseum.profilMuseum.get(0).nama, Toast.LENGTH_SHORT).show();

@@ -15,27 +15,27 @@ public interface MuseumAPI {
     Observable<DataMuseum> getMuseumProfile(@Query("museum_id") String museumId);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Observable<DataMuseum> getMuseumProvinsi(@Query("kode_prop") String provCode);
+    Observable<DataMuseum> getMuseumByProvinsi(@Query("kode_prop") String provCode);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Observable<DataMuseum> getMuseumKabKota(@Query("kode_kota") String kabCode);
+    Observable<DataMuseum> getMuseumByKabKota(@Query("kode_kota") String kabCode);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Observable<DataMuseum> getMuseumKec(@Query("kode_kec") String kecCode);
+    Observable<DataMuseum> getMuseumByKec(@Query("kode_kec") String kecCode);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Observable<DataMuseum> getMuseumNama(@Query("nama") String museumName);
+    Observable<DataMuseum> getMuseumByName(@Query("nama") String museumName);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
     Observable<DataMuseum> getMuseumByCoordinate(@Query("lintang") double latitude, @Query("bujur") double longitude);
 
     //    data wilayah
     @GET(MuseumClientAPI.URI_GET_WILAYAH)
-    Observable<DataWilayah> getDataProp();
+    Observable<DataWilayah> getProvinces();
 
     @GET(MuseumClientAPI.URI_GET_WILAYAH)
-    Observable<DataWilayah> getDataByProp(@Query("mst_kode_wilayah") String provCode);
+    Observable<DataWilayah> getCitiesByProvince(@Query("mst_kode_wilayah") String provCode);
 
     @GET(MuseumClientAPI.URI_GET_WILAYAH)
-    Observable<DataWilayah> getDataByKabKota(@Query("mst_kode_wilayah") String kabCode);
+    Observable<DataWilayah> getKecsByCity(@Query("mst_kode_wilayah") String cityCode);
 }
