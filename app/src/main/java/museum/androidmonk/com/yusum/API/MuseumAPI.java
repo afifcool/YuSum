@@ -1,40 +1,41 @@
 package museum.androidmonk.com.yusum.API;
 
+
 import museum.androidmonk.com.yusum.model.DataMuseum;
 import museum.androidmonk.com.yusum.model.DataWilayah;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import rx.Observable;
 
 public interface MuseumAPI {
     String ENDPOINT = "http://jendela.data.kemdikbud.go.id/api/index.php/";
 
     //    data museum
     @GET(MuseumClientAPI.URI_GET_PROFIL_MUSEUM)
-    Call<DataMuseum> getProfilMuseum(@Query("museum_id") String museum_id);
+    Observable<DataMuseum> getMuseumProfile(@Query("museum_id") String museumId);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Call<DataMuseum> getMuseumProvinsi(@Query("kode_prop") String kode_prop);
+    Observable<DataMuseum> getMuseumProvinsi(@Query("kode_prop") String provCode);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Call<DataMuseum> getMuseumKabKota(@Query("kode_kota") String kode_kota);
+    Observable<DataMuseum> getMuseumKabKota(@Query("kode_kota") String kabCode);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Call<DataMuseum> getMuseumKec(@Query("kode_kec") String kode_kec);
+    Observable<DataMuseum> getMuseumKec(@Query("kode_kec") String kecCode);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Call<DataMuseum> getMuseumNama(@Query("nama") String nama);
+    Observable<DataMuseum> getMuseumNama(@Query("nama") String museumName);
 
     @GET(MuseumClientAPI.URI_GET_SEARCH_MUSEUM)
-    Call<DataMuseum> getMuseumByCoordinate(@Query("lintang") String lintang, @Query("bujur") String bujur);
+    Observable<DataMuseum> getMuseumByCoordinate(@Query("lintang") double latitude, @Query("bujur") double longitude);
 
     //    data wilayah
     @GET(MuseumClientAPI.URI_GET_WILAYAH)
-    Call<DataWilayah> getDataProp();
+    Observable<DataWilayah> getDataProp();
 
     @GET(MuseumClientAPI.URI_GET_WILAYAH)
-    Call<DataWilayah> getDataByProp(@Query("mst_kode_wilayah") String kode_prop);
+    Observable<DataWilayah> getDataByProp(@Query("mst_kode_wilayah") String provCode);
 
     @GET(MuseumClientAPI.URI_GET_WILAYAH)
-    Call<DataWilayah> getDataByKabKota(@Query("mst_kode_wilayah") String kode_kab_kota);
+    Observable<DataWilayah> getDataByKabKota(@Query("mst_kode_wilayah") String kabCode);
 }
