@@ -8,10 +8,12 @@ import android.widget.Toast;
 import museum.androidmonk.com.yusum.API.MuseumApiService;
 import museum.androidmonk.com.yusum.model.DataMuseum;
 import museum.androidmonk.com.yusum.model.DataWilayah;
-import rx.Subscription;
+import museum.androidmonk.com.yusum.presenter.MainActivityPresenter;
+import museum.androidmonk.com.yusum.view.MainActivityView;
 import rx.subscriptions.CompositeSubscription;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainActivityView {
+    private MainActivityPresenter mainActivityPresenter;
 
     private MuseumApiService museumApiService;
     private CompositeSubscription compositeSubscription;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         museumApiService = new MuseumApiService();
         compositeSubscription = new CompositeSubscription();
+        mainActivityPresenter = new MainActivityPresenter(this, museumApiService, compositeSubscription);
 
         //TODO: GALLANT x AFIF should be placed on presenter
         getDataWilayah();
@@ -30,39 +33,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getDataWilayah() {
-        Subscription subscription = museumApiService.getProvinces(new MuseumApiService.OnGetListAreaListener() {
-            @Override
-            public void onSuccess(DataWilayah dataWilayah) {
-                Toast.makeText(getBaseContext(), "GET data wilayah\n" + dataWilayah.wilayahModels.get(0).nama, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Toast.makeText(getBaseContext(), "error get data wilayah, " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
-        compositeSubscription.add(subscription);
+        mainActivityPresenter.getProvinces();
     }
 
     private void getDataMuseum() {
         String museumId = "4A33CF6F-A284-4E42-830B-E7DC755614CD";
-        Subscription subscription = museumApiService.getMuseumProfile(museumId, new MuseumApiService.OnGetListMuseumListener() {
-            @Override
-            public void onSuccess(DataMuseum dataMuseum) {
-                Toast.makeText(getBaseContext(), "GET museum profile\n" + dataMuseum.profilMuseum.get(0).nama, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Toast.makeText(getBaseContext(), "error get museum profile, " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
-        compositeSubscription.add(subscription);
+        mainActivityPresenter.getMuseumProfile(museumId);
     }
 
     @Override
     protected void onDestroy() {
         compositeSubscription.unsubscribe();
         super.onDestroy();
+    }
+
+    @Override
+    public void getProvincesSuccess(DataWilayah dataWilayah) {
+        Toast.makeText(getBaseContext(), "GET data wilayah\n" + dataWilayah.wilayahModels.get(0).nama, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getProvincesFail(String errorMessage) {
+        Toast.makeText(getBaseContext(), "error get data wilayah, " + errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getMuseumProfileSuccess(DataMuseum dataMuseum) {
+        Toast.makeText(getBaseContext(), "GET museum profile\n" + dataMuseum.profilMuseum.get(0).nama, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getMuseumProfileFail(String errorMessage) {
+        Toast.makeText(getBaseContext(), "error get museum profile, " + errorMessage, Toast.LENGTH_SHORT).show();
     }
 }
