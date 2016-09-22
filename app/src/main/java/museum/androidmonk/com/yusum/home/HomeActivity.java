@@ -1,4 +1,4 @@
-package museum.androidmonk.com.yusum;
+package museum.androidmonk.com.yusum.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,14 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import museum.androidmonk.com.yusum.API.MuseumApiService;
+import museum.androidmonk.com.yusum.R;
 import museum.androidmonk.com.yusum.model.DataMuseum;
 import museum.androidmonk.com.yusum.model.DataWilayah;
-import museum.androidmonk.com.yusum.presenter.MainActivityPresenter;
 import museum.androidmonk.com.yusum.view.MainActivityView;
 import rx.subscriptions.CompositeSubscription;
 
-public class MainActivity extends AppCompatActivity implements MainActivityView {
-    private MainActivityPresenter mainActivityPresenter;
+public class HomeActivity extends AppCompatActivity implements MainActivityView {
+    private HomePresenter homePresenter;
 
     private MuseumApiService museumApiService;
     private CompositeSubscription compositeSubscription;
@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         museumApiService = new MuseumApiService();
         compositeSubscription = new CompositeSubscription();
-        mainActivityPresenter = new MainActivityPresenter(this, museumApiService, compositeSubscription);
+        homePresenter = new HomePresenter(this, museumApiService, compositeSubscription);
 
         //TODO: GALLANT x AFIF should be placed on presenter
         getDataWilayah();
@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
     }
 
     private void getDataWilayah() {
-        mainActivityPresenter.getProvinces();
+        homePresenter.getProvinces();
     }
 
     private void getDataMuseum() {
         String museumId = "4A33CF6F-A284-4E42-830B-E7DC755614CD";
-        mainActivityPresenter.getMuseumProfile(museumId);
+        homePresenter.getMuseumProfile(museumId);
     }
 
     @Override

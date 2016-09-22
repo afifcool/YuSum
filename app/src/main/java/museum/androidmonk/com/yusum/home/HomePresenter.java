@@ -1,4 +1,4 @@
-package museum.androidmonk.com.yusum.presenter;
+package museum.androidmonk.com.yusum.home;
 
 import museum.androidmonk.com.yusum.API.MuseumApiService;
 import museum.androidmonk.com.yusum.model.DataMuseum;
@@ -7,12 +7,12 @@ import museum.androidmonk.com.yusum.view.MainActivityView;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-public class MainActivityPresenter {
+public class HomePresenter {
     private MainActivityView view;
     private MuseumApiService museumApiService;
     private CompositeSubscription compositeSubscription;
 
-    public MainActivityPresenter(MainActivityView view, MuseumApiService museumApiService, CompositeSubscription compositeSubscription) {
+    public HomePresenter(MainActivityView view, MuseumApiService museumApiService, CompositeSubscription compositeSubscription) {
         this.view = view;
         this.museumApiService = museumApiService;
         this.compositeSubscription = compositeSubscription;
